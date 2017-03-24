@@ -13,9 +13,9 @@ import edu.harvard.hms.dbmi.bd2k.irct.exception.JoinActionSetupException;
 import edu.harvard.hms.dbmi.bd2k.irct.join.FullOuterHashJoin;
 import edu.harvard.hms.dbmi.bd2k.irct.model.join.Join;
 import edu.harvard.hms.dbmi.bd2k.irct.model.resource.PrimitiveDataType;
-import edu.harvard.hms.dbmi.bd2k.irct.model.result.Result;
-import edu.harvard.hms.dbmi.bd2k.irct.model.result.ResultDataType;
-import edu.harvard.hms.dbmi.bd2k.irct.model.result.ResultStatus;
+import edu.harvard.hms.dbmi.bd2k.irct.model.result.Job;
+import edu.harvard.hms.dbmi.bd2k.irct.model.result.JobDataType;
+import edu.harvard.hms.dbmi.bd2k.irct.model.result.JobStatus;
 import edu.harvard.hms.dbmi.bd2k.irct.model.result.exception.PersistableException;
 import edu.harvard.hms.dbmi.bd2k.irct.model.result.exception.ResultSetException;
 import edu.harvard.hms.dbmi.bd2k.irct.model.result.tabular.Column;
@@ -50,7 +50,7 @@ public class FullOuterHashJoinTest {
 	public void testRunPositive() {
 		FullOuterHashJoin foj = new FullOuterHashJoin();
 		SecureSession session = new SecureSession();
-		Result result = new Result();
+		Job result = new Job();
 		MemoryResultSet rsi = new MemoryResultSet();
 		Join join = new Join();
 
@@ -81,7 +81,7 @@ public class FullOuterHashJoinTest {
 	public void testRunNegative() {
 		FullOuterHashJoin foj = new FullOuterHashJoin();
 		SecureSession session = new SecureSession();
-		Result result = new Result();
+		Job result = new Job();
 		MemoryResultSet rsi = new MemoryResultSet();
 		Join join = new Join();
 
@@ -95,8 +95,8 @@ public class FullOuterHashJoinTest {
 			join.getStringValues().put("RightColumn", "user_id");
 
 			result = foj.run(session, join, result);
-			assertEquals("ResultStatus is not ERROR", ResultStatus.ERROR,
-					result.getResultStatus());
+			assertEquals("ResultStatus is not ERROR", JobStatus.ERROR,
+					result.getJobStatus());
 		} catch (ResultSetException | PersistableException | JoinActionSetupException e) {
 			e.printStackTrace();
 			fail("Exception thrown");
@@ -111,7 +111,7 @@ public class FullOuterHashJoinTest {
 	public void testRunNull() {
 		FullOuterHashJoin foj = new FullOuterHashJoin();
 		SecureSession session = new SecureSession();
-		Result result = new Result();
+		Job result = new Job();
 		MemoryResultSet rsi = new MemoryResultSet();
 		Join join = new Join();
 
@@ -125,8 +125,8 @@ public class FullOuterHashJoinTest {
 			join.getStringValues().put("RightColumn", "user_id");
 
 			result = foj.run(session, join, result);
-			assertEquals("ResultStatus is not ERROR", ResultStatus.ERROR,
-					result.getResultStatus());
+			assertEquals("ResultStatus is not ERROR", JobStatus.ERROR,
+					result.getJobStatus());
 		} catch (ResultSetException | PersistableException | JoinActionSetupException e) {
 			e.printStackTrace();
 			fail("Exception thrown");
@@ -142,7 +142,7 @@ public class FullOuterHashJoinTest {
 	public void testGetResults() {
 		FullOuterHashJoin foj = new FullOuterHashJoin();
 		SecureSession session = new SecureSession();
-		Result result = new Result();
+		Job result = new Job();
 		MemoryResultSet rsi = new MemoryResultSet();
 		Join join = new Join();
 
@@ -178,7 +178,7 @@ public class FullOuterHashJoinTest {
 	public void testGetJoinDataType() {
 		FullOuterHashJoin foj = new FullOuterHashJoin();
 		assertEquals("Should be result type of tabular", foj.getJoinDataType(),
-				ResultDataType.TABULAR);
+				JobDataType.TABULAR);
 	}
 
 	/**

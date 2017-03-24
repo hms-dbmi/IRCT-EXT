@@ -13,9 +13,9 @@ import edu.harvard.hms.dbmi.bd2k.irct.exception.JoinActionSetupException;
 import edu.harvard.hms.dbmi.bd2k.irct.join.InnerJoin;
 import edu.harvard.hms.dbmi.bd2k.irct.model.join.Join;
 import edu.harvard.hms.dbmi.bd2k.irct.model.resource.PrimitiveDataType;
-import edu.harvard.hms.dbmi.bd2k.irct.model.result.Result;
-import edu.harvard.hms.dbmi.bd2k.irct.model.result.ResultDataType;
-import edu.harvard.hms.dbmi.bd2k.irct.model.result.ResultStatus;
+import edu.harvard.hms.dbmi.bd2k.irct.model.result.Job;
+import edu.harvard.hms.dbmi.bd2k.irct.model.result.JobDataType;
+import edu.harvard.hms.dbmi.bd2k.irct.model.result.JobStatus;
 import edu.harvard.hms.dbmi.bd2k.irct.model.result.exception.PersistableException;
 import edu.harvard.hms.dbmi.bd2k.irct.model.result.exception.ResultSetException;
 import edu.harvard.hms.dbmi.bd2k.irct.model.result.tabular.Column;
@@ -49,7 +49,7 @@ public class InnerJoinTest {
 	public void testRunPositive() {
 		InnerJoin ij = new InnerJoin();
 		SecureSession session = new SecureSession();
-		Result result = new Result();
+		Job result = new Job();
 		MemoryResultSet rsi = new MemoryResultSet();
 		Join join = new Join();
 
@@ -81,7 +81,7 @@ public class InnerJoinTest {
 	public void testRunNegative() {
 		InnerJoin ij = new InnerJoin();
 		SecureSession session = new SecureSession();
-		Result result = new Result();
+		Job result = new Job();
 		MemoryResultSet rsi = new MemoryResultSet();
 		Join join = new Join();
 
@@ -94,8 +94,8 @@ public class InnerJoinTest {
 			join.getStringValues().put("RightColumn", "user_id");
 
 			result = ij.run(session, join, result);
-			assertEquals("ResultStatus is not ERROR", ResultStatus.ERROR,
-					result.getResultStatus());
+			assertEquals("ResultStatus is not ERROR", JobStatus.ERROR,
+					result.getJobStatus());
 		} catch (ResultSetException | PersistableException e) {
 			e.printStackTrace();
 			fail("Exception thrown");
@@ -110,7 +110,7 @@ public class InnerJoinTest {
 	public void testRunNull() {
 		InnerJoin ij = new InnerJoin();
 		SecureSession session = new SecureSession();
-		Result result = new Result();
+		Job result = new Job();
 		MemoryResultSet rsi = new MemoryResultSet();
 		Join join = new Join();
 
@@ -123,8 +123,8 @@ public class InnerJoinTest {
 			join.getStringValues().put("RightColumn", "user_id");
 
 			result = ij.run(session, join, result);
-			assertEquals("ResultStatus is not ERROR", ResultStatus.ERROR,
-					result.getResultStatus());
+			assertEquals("ResultStatus is not ERROR", JobStatus.ERROR,
+					result.getJobStatus());
 		} catch (ResultSetException | PersistableException e) {
 			e.printStackTrace();
 			fail("Exception thrown");
@@ -140,7 +140,7 @@ public class InnerJoinTest {
 	public void testGetResults() {
 		InnerJoin ij = new InnerJoin();
 		SecureSession session = new SecureSession();
-		Result result = new Result();
+		Job result = new Job();
 		MemoryResultSet rsi = new MemoryResultSet();
 		Join join = new Join();
 
@@ -175,7 +175,7 @@ public class InnerJoinTest {
 	public void testGetJoinDataType() {
 		InnerJoin ij = new InnerJoin();
 		assertEquals("Should be result type of tabular", ij.getJoinDataType(),
-				ResultDataType.TABULAR);
+				JobDataType.TABULAR);
 	}
 
 	/**

@@ -10,9 +10,9 @@ import java.util.Map;
 import edu.harvard.hms.dbmi.bd2k.irct.exception.JoinActionSetupException;
 import edu.harvard.hms.dbmi.bd2k.irct.model.join.Join;
 import edu.harvard.hms.dbmi.bd2k.irct.model.join.JoinImplementation;
-import edu.harvard.hms.dbmi.bd2k.irct.model.result.Result;
-import edu.harvard.hms.dbmi.bd2k.irct.model.result.ResultDataType;
-import edu.harvard.hms.dbmi.bd2k.irct.model.result.ResultStatus;
+import edu.harvard.hms.dbmi.bd2k.irct.model.result.Job;
+import edu.harvard.hms.dbmi.bd2k.irct.model.result.JobDataType;
+import edu.harvard.hms.dbmi.bd2k.irct.model.result.JobStatus;
 import edu.harvard.hms.dbmi.bd2k.irct.model.result.exception.PersistableException;
 import edu.harvard.hms.dbmi.bd2k.irct.model.result.exception.ResultSetException;
 import edu.harvard.hms.dbmi.bd2k.irct.model.result.tabular.ResultSet;
@@ -31,14 +31,14 @@ public class FullOuterJoin implements JoinImplementation {
 	public void setup(Map<String, Object> parameters)
 			throws JoinActionSetupException {
 	}
-
+	
 	@Override
-	public Result run(SecureSession session, Join join, Result result) throws ResultSetException, PersistableException {
+	public Job run(SecureSession session, Join join, Job result) throws ResultSetException, PersistableException {
 		ResultSet leftResultSet = (ResultSet) join.getObjectValues().get(
 				"LeftResultSet");
 
 		if (leftResultSet == null) {
-			result.setResultStatus(ResultStatus.ERROR);
+			result.setJobStatus(JobStatus.ERROR);
 			result.setMessage("LeftResultSet is null");
 			return result;
 		}
@@ -47,7 +47,7 @@ public class FullOuterJoin implements JoinImplementation {
 			leftColumnIndex = leftResultSet.findColumn(join.getStringValues()
 					.get("LeftColumn"));
 		} catch (ResultSetException rse) {
-			result.setResultStatus(ResultStatus.ERROR);
+			result.setJobStatus(JobStatus.ERROR);
 			result.setMessage("LeftColumn : " + rse.getMessage());
 			return result;
 		}
@@ -55,7 +55,7 @@ public class FullOuterJoin implements JoinImplementation {
 		ResultSet rightResultSet = (ResultSet) join.getObjectValues().get(
 				"RightResultSet");
 		if (rightResultSet == null) {
-			result.setResultStatus(ResultStatus.ERROR);
+			result.setJobStatus(JobStatus.ERROR);
 			result.setMessage("RightResultSet is null");
 			return result;
 		}
@@ -64,7 +64,7 @@ public class FullOuterJoin implements JoinImplementation {
 			rightColumnIndex = rightResultSet.findColumn(join.getStringValues()
 					.get("RightColumn"));
 		} catch (ResultSetException rse) {
-			result.setResultStatus(ResultStatus.ERROR);
+			result.setJobStatus(JobStatus.ERROR);
 			result.setMessage("RightColumn : " + rse.getMessage());
 			return result;
 		}
@@ -119,19 +119,19 @@ public class FullOuterJoin implements JoinImplementation {
 		}
 
 		computedResults.beforeFirst();
-		result.setResultStatus(ResultStatus.COMPLETE);
+		result.setJobStatus(JobStatus.COMPLETE);
 		result.setData(computedResults);
 		return result;
 
 	}
 
 	@Override
-	public Result getResults(Result result) {
+	public Job getResults(Job result) {
 		return result;
 	}
 
 	@Override
-	public ResultDataType getJoinDataType() {
-		return ResultDataType.TABULAR;
+	public JobDataType getJoinDataType() {
+		return JobDataType.TABULAR;
 	}
 }

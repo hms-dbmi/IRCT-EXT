@@ -16,8 +16,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import edu.harvard.hms.dbmi.bd2k.irct.dataconverter.ResultDataConverter;
-import edu.harvard.hms.dbmi.bd2k.irct.model.result.Result;
-import edu.harvard.hms.dbmi.bd2k.irct.model.result.ResultDataType;
+import edu.harvard.hms.dbmi.bd2k.irct.model.result.Job;
+import edu.harvard.hms.dbmi.bd2k.irct.model.result.JobDataType;
 import edu.harvard.hms.dbmi.bd2k.irct.model.result.exception.PersistableException;
 import edu.harvard.hms.dbmi.bd2k.irct.model.result.exception.ResultSetException;
 import edu.harvard.hms.dbmi.bd2k.irct.model.result.tabular.ResultSet;
@@ -37,8 +37,8 @@ public class CSVTabularDataConverter implements ResultDataConverter {
 	}
 	
 	@Override
-	public ResultDataType getResultDataType() {
-		return ResultDataType.TABULAR;
+	public JobDataType getResultDataType() {
+		return JobDataType.TABULAR;
 	}
 	
 	@Override
@@ -57,7 +57,7 @@ public class CSVTabularDataConverter implements ResultDataConverter {
 	}
 
 	@Override
-	public StreamingOutput createStream(final Result result) {
+	public StreamingOutput createStream(final Job result) {
 		StreamingOutput stream = new StreamingOutput() {
 			@Override
 			public void write(OutputStream outputStream) throws IOException,

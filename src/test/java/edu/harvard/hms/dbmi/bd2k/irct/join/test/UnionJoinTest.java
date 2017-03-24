@@ -13,9 +13,9 @@ import edu.harvard.hms.dbmi.bd2k.irct.exception.JoinActionSetupException;
 import edu.harvard.hms.dbmi.bd2k.irct.join.UnionJoin;
 import edu.harvard.hms.dbmi.bd2k.irct.model.join.Join;
 import edu.harvard.hms.dbmi.bd2k.irct.model.resource.PrimitiveDataType;
-import edu.harvard.hms.dbmi.bd2k.irct.model.result.Result;
-import edu.harvard.hms.dbmi.bd2k.irct.model.result.ResultDataType;
-import edu.harvard.hms.dbmi.bd2k.irct.model.result.ResultStatus;
+import edu.harvard.hms.dbmi.bd2k.irct.model.result.Job;
+import edu.harvard.hms.dbmi.bd2k.irct.model.result.JobDataType;
+import edu.harvard.hms.dbmi.bd2k.irct.model.result.JobStatus;
 import edu.harvard.hms.dbmi.bd2k.irct.model.result.exception.PersistableException;
 import edu.harvard.hms.dbmi.bd2k.irct.model.result.exception.ResultSetException;
 import edu.harvard.hms.dbmi.bd2k.irct.model.result.tabular.Column;
@@ -50,7 +50,7 @@ public class UnionJoinTest {
 	public void testRunPositive() {
 		UnionJoin uj = new UnionJoin();
 		SecureSession session = new SecureSession();
-		Result result = new Result();
+		Job result = new Job();
 		MemoryResultSet rsi = new MemoryResultSet();
 		Join join = new Join();
 
@@ -80,7 +80,7 @@ public class UnionJoinTest {
 	public void testRunNegative() {
 		UnionJoin uj = new UnionJoin();
 		SecureSession session = new SecureSession();
-		Result result = new Result();
+		Job result = new Job();
 		MemoryResultSet rsi = new MemoryResultSet();
 		Join join = new Join();
 
@@ -91,8 +91,8 @@ public class UnionJoinTest {
 			join.getObjectValues().put("RightResultSet", null);
 
 			result = uj.run(session, join, result);
-			assertEquals("ResultStatus is not ERROR", ResultStatus.ERROR,
-					result.getResultStatus());
+			assertEquals("ResultStatus is not ERROR", JobStatus.ERROR,
+					result.getJobStatus());
 		} catch (ResultSetException | PersistableException e) {
 			e.printStackTrace();
 			fail("Exception thrown");
@@ -107,7 +107,7 @@ public class UnionJoinTest {
 	public void testRunNull() {
 		UnionJoin uj = new UnionJoin();
 		SecureSession session = new SecureSession();
-		Result result = new Result();
+		Job result = new Job();
 		MemoryResultSet rsi = new MemoryResultSet();
 		Join join = new Join();
 
@@ -118,8 +118,8 @@ public class UnionJoinTest {
 			join.getObjectValues().put("RightResultSet", null);
 
 			result = uj.run(session, join, result);
-			assertEquals("ResultStatus is not ERROR", ResultStatus.ERROR,
-					result.getResultStatus());
+			assertEquals("ResultStatus is not ERROR", JobStatus.ERROR,
+					result.getJobStatus());
 		} catch (ResultSetException | PersistableException e) {
 			e.printStackTrace();
 			fail("Exception thrown");
@@ -135,7 +135,7 @@ public class UnionJoinTest {
 	public void testGetResults() {
 		UnionJoin uj = new UnionJoin();
 		SecureSession session = new SecureSession();
-		Result result = new Result();
+		Job result = new Job();
 		MemoryResultSet rsi = new MemoryResultSet();
 		Join join = new Join();
 
@@ -168,7 +168,7 @@ public class UnionJoinTest {
 	public void testGetJoinDataType() {
 		UnionJoin uj = new UnionJoin();
 		assertEquals("Should be result type of tabular", uj.getJoinDataType(),
-				ResultDataType.TABULAR);
+				JobDataType.TABULAR);
 	}
 
 	/**

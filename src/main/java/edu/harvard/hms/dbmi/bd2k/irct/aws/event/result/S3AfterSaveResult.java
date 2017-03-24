@@ -20,7 +20,7 @@ import edu.harvard.hms.dbmi.bd2k.irct.event.action.AfterExecutionPlan;
 import edu.harvard.hms.dbmi.bd2k.irct.exception.ResourceInterfaceException;
 import edu.harvard.hms.dbmi.bd2k.irct.executable.Executable;
 import edu.harvard.hms.dbmi.bd2k.irct.executable.ExecutableStatus;
-import edu.harvard.hms.dbmi.bd2k.irct.model.result.Result;
+import edu.harvard.hms.dbmi.bd2k.irct.model.result.Job;
 import edu.harvard.hms.dbmi.bd2k.irct.model.security.SecureSession;
 
 /**
@@ -54,7 +54,7 @@ public class S3AfterSaveResult implements AfterExecutionPlan {
 				return;
 			}
 
-			Result result = executable.getResults();
+			Job result = executable.getResults();
 			for (File resultFile : result.getData().getFileList()) {
 				String keyName = s3Folder + result.getId() + "/"
 						+ resultFile.getName();

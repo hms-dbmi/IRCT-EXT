@@ -13,9 +13,9 @@ import edu.harvard.hms.dbmi.bd2k.irct.exception.JoinActionSetupException;
 import edu.harvard.hms.dbmi.bd2k.irct.join.RightOuterJoin;
 import edu.harvard.hms.dbmi.bd2k.irct.model.join.Join;
 import edu.harvard.hms.dbmi.bd2k.irct.model.resource.PrimitiveDataType;
-import edu.harvard.hms.dbmi.bd2k.irct.model.result.Result;
-import edu.harvard.hms.dbmi.bd2k.irct.model.result.ResultDataType;
-import edu.harvard.hms.dbmi.bd2k.irct.model.result.ResultStatus;
+import edu.harvard.hms.dbmi.bd2k.irct.model.result.Job;
+import edu.harvard.hms.dbmi.bd2k.irct.model.result.JobDataType;
+import edu.harvard.hms.dbmi.bd2k.irct.model.result.JobStatus;
 import edu.harvard.hms.dbmi.bd2k.irct.model.result.exception.PersistableException;
 import edu.harvard.hms.dbmi.bd2k.irct.model.result.exception.ResultSetException;
 import edu.harvard.hms.dbmi.bd2k.irct.model.result.tabular.Column;
@@ -50,7 +50,7 @@ public class RightOuterJoinTest {
 	public void testRunPositive() {
 		RightOuterJoin roj = new RightOuterJoin();
 		SecureSession session = new SecureSession();
-		Result result = new Result();
+		Job result = new Job();
 		MemoryResultSet rsi = new MemoryResultSet();
 		Join join = new Join();
 
@@ -82,7 +82,7 @@ public class RightOuterJoinTest {
 	public void testRunNegative() {
 		RightOuterJoin roj = new RightOuterJoin();
 		SecureSession session = new SecureSession();
-		Result result = new Result();
+		Job result = new Job();
 		MemoryResultSet rsi = new MemoryResultSet();
 		Join join = new Join();
 
@@ -95,8 +95,8 @@ public class RightOuterJoinTest {
 			join.getStringValues().put("RightColumn", "user_id");
 
 			result = roj.run(session, join, result);
-			assertEquals("ResultStatus is not ERROR", ResultStatus.ERROR,
-					result.getResultStatus());
+			assertEquals("ResultStatus is not ERROR", JobStatus.ERROR,
+					result.getJobStatus());
 		} catch (ResultSetException | PersistableException e) {
 			e.printStackTrace();
 			fail("Exception thrown");
@@ -111,7 +111,7 @@ public class RightOuterJoinTest {
 	public void testRunNull() {
 		RightOuterJoin roj = new RightOuterJoin();
 		SecureSession session = new SecureSession();
-		Result result = new Result();
+		Job result = new Job();
 		MemoryResultSet rsi = new MemoryResultSet();
 		Join join = new Join();
 
@@ -124,8 +124,8 @@ public class RightOuterJoinTest {
 			join.getStringValues().put("RightColumn", "user_id");
 
 			result = roj.run(session, join, result);
-			assertEquals("ResultStatus is not ERROR", ResultStatus.ERROR,
-					result.getResultStatus());
+			assertEquals("ResultStatus is not ERROR", JobStatus.ERROR,
+					result.getJobStatus());
 		} catch (ResultSetException | PersistableException e) {
 			e.printStackTrace();
 			fail("Exception thrown");
@@ -141,7 +141,7 @@ public class RightOuterJoinTest {
 	public void testGetResults() {
 		RightOuterJoin roj = new RightOuterJoin();
 		SecureSession session = new SecureSession();
-		Result result = new Result();
+		Job result = new Job();
 		MemoryResultSet rsi = new MemoryResultSet();
 		Join join = new Join();
 
@@ -176,7 +176,7 @@ public class RightOuterJoinTest {
 	public void testGetJoinDataType() {
 		RightOuterJoin roj = new RightOuterJoin();
 		assertEquals("Should be result type of tabular", roj.getJoinDataType(),
-				ResultDataType.TABULAR);
+				JobDataType.TABULAR);
 	}
 
 	/**

@@ -20,8 +20,8 @@ import com.amazonaws.services.s3.model.ListObjectsV2Result;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 
 import edu.harvard.hms.dbmi.bd2k.irct.event.result.AfterGetResult;
-import edu.harvard.hms.dbmi.bd2k.irct.model.result.Result;
-import edu.harvard.hms.dbmi.bd2k.irct.model.result.ResultStatus;
+import edu.harvard.hms.dbmi.bd2k.irct.model.result.Job;
+import edu.harvard.hms.dbmi.bd2k.irct.model.result.JobStatus;
 
 /**
  * The S3 After Get Result checks to see if a result is available localy and if
@@ -55,8 +55,8 @@ public class S3AfterGetResult implements AfterGetResult {
 	}
 
 	@Override
-	public void fire(Result result) {
-		if(result.getResultStatus() != ResultStatus.AVAILABLE) {
+	public void fire(Job result) {
+		if(result.getJobStatus() != JobStatus.AVAILABLE) {
 			return;
 		}
 		if (!result.getResultSetLocation().startsWith("S3://")) {
